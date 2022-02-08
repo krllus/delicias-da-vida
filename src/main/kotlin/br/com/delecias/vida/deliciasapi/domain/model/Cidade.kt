@@ -6,6 +6,6 @@ import javax.persistence.*
 @Table(name = "tb_cidade")
 data class Cidade(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = -1,
-    @Column(name = "nome") val nome : String,
-    @ManyToOne val estado : Estado
+    @Column(name = "nome") var nome : String,
+    @ManyToOne var estado : Estado
 )

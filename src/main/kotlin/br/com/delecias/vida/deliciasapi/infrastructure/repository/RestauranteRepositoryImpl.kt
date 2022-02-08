@@ -2,6 +2,7 @@ package br.com.delecias.vida.deliciasapi.infrastructure.repository
 
 import br.com.delecias.vida.deliciasapi.domain.model.Restaurante
 import br.com.delecias.vida.deliciasapi.domain.repository.RestauranteRepository
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
@@ -28,7 +29,10 @@ class RestauranteRepositoryImpl(
     }
 
     @Transactional
-    override fun remover(restaurante: Restaurante) {
+    override fun remover(restauranteId: Long) {
+
+        val restaurante = buscar(restauranteId) ?: throw EmptyResultDataAccessException(1)
+
         return manager.remove(restaurante)
     }
 }

@@ -6,5 +6,5 @@ import javax.persistence.*
 @Table(name = "tb_forma_pagamento")
 data class FormaPagamento(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = -1,
-    @Column(name = "descricao") val descricao : String = ""
+    @Column(name = "descricao") var descricao : String = ""
 )

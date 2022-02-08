@@ -6,5 +6,5 @@ import javax.persistence.*
 @Table(name = "tb_estado")
 data class Estado(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = -1,
-    @Column(name = "nome") val nome : String = ""
+    @Column(name = "nome") var nome : String = ""
 )

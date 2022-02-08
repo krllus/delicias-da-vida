@@ -7,7 +7,7 @@ import javax.persistence.*
 @Table(name = "tb_restaurante")
 data class Restaurante(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = -1,
-    @Column(name = "nome") val nomeRestaurante: String = "",
-    @Column(name = "taxa_entrega") val taxaEntrega: BigDecimal = BigDecimal.ZERO,
-    @ManyToOne val cozinha : Cozinha = Cozinha()
+    @Column(name = "nome") var nomeRestaurante: String = "",
+    @Column(name = "taxa_entrega") var taxaEntrega: BigDecimal = BigDecimal.ZERO,
+    @ManyToOne var cozinha : Cozinha = Cozinha()
 )
