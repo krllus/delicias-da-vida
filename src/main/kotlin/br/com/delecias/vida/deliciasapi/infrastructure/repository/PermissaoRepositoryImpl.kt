@@ -3,6 +3,7 @@ package br.com.delecias.vida.deliciasapi.infrastructure.repository
 import br.com.delecias.vida.deliciasapi.domain.model.Cozinha
 import br.com.delecias.vida.deliciasapi.domain.model.Permissao
 import br.com.delecias.vida.deliciasapi.domain.repository.PermissaoRepository
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
@@ -28,7 +29,8 @@ class PermissaoRepositoryImpl(
     }
 
     @Transactional
-    override fun remover(permissao: Permissao) {
+    override fun remover(permissaoId: Long) {
+        val permissao = buscar(permissaoId) ?: throw EmptyResultDataAccessException(1)
         return manager.remove(permissao)
     }
 }

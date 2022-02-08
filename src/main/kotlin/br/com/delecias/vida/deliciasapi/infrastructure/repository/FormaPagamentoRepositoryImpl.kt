@@ -2,6 +2,7 @@ package br.com.delecias.vida.deliciasapi.infrastructure.repository
 
 import br.com.delecias.vida.deliciasapi.domain.model.FormaPagamento
 import br.com.delecias.vida.deliciasapi.domain.repository.FormaPagamentoRepository
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
@@ -27,7 +28,8 @@ class FormaPagamentoRepositoryImpl(
     }
 
     @Transactional
-    override fun remover(formaPagamento: FormaPagamento) {
+    override fun remover(formaPagamentoId: Long) {
+        val formaPagamento = buscar(formaPagamentoId) ?: throw EmptyResultDataAccessException(1)
         return manager.remove(formaPagamento)
     }
 }

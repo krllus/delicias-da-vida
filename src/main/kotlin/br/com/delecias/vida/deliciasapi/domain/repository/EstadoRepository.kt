@@ -6,5 +6,5 @@ interface EstadoRepository {
     fun listar(): List<Estado>
     fun buscar(id: Long): Estado?
     fun salvar(estado: Estado): Estado
-    fun remover(estado: Estado)
+    fun remover(estadoId: Long)
 }

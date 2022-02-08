@@ -3,6 +3,7 @@ package br.com.delecias.vida.deliciasapi.infrastructure.repository
 import br.com.delecias.vida.deliciasapi.domain.model.Cozinha
 import br.com.delecias.vida.deliciasapi.domain.model.Estado
 import br.com.delecias.vida.deliciasapi.domain.repository.EstadoRepository
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
@@ -28,7 +29,8 @@ class EstadoRepositoryImpl(
     }
 
     @Transactional
-    override fun remover(estado: Estado) {
+    override fun remover(estadoId: Long) {
+        val estado = buscar(estadoId) ?: throw EmptyResultDataAccessException(1)
         return manager.remove(estado)
     }
 }

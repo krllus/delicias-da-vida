@@ -1,6 +1,8 @@
 package br.com.delecias.vida.deliciasapi.api.controller
 
+import br.com.delecias.vida.deliciasapi.domain.exception.EntidadeEmUsoException
 import br.com.delecias.vida.deliciasapi.domain.exception.EntidadeNaoEncontradaException
+import br.com.delecias.vida.deliciasapi.domain.model.Cidade
 import br.com.delecias.vida.deliciasapi.domain.model.Restaurante
 import br.com.delecias.vida.deliciasapi.domain.repository.RestauranteRepository
 import br.com.delecias.vida.deliciasapi.domain.service.CadastroRestauranteService
@@ -55,6 +57,20 @@ class RestauranteController(
             return ResponseEntity.ok(restauranteAtualizado)
         } catch (e: EntidadeNaoEncontradaException) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
+        }
+    }
+
+    @DeleteMapping(value = ["/{restauranteId}"])
+    fun deleteRestaurant(
+        @PathVariable("restauranteId") restauranteId: Long
+    ): ResponseEntity<Restaurante> {
+        return try {
+            serviceRestaurante.excluir(restauranteId)
+            ResponseEntity.noContent().build()
+        } catch (e: EntidadeNaoEncontradaException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+        } catch (e: EntidadeEmUsoException) {
+            ResponseEntity.status(HttpStatus.CONFLICT).build()
         }
     }
 

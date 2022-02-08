@@ -6,5 +6,5 @@ interface PermissaoRepository {
     fun listar(): List<Permissao>
     fun buscar(id: Long): Permissao?
     fun salvar(permissao: Permissao): Permissao
-    fun remover(permissao: Permissao)
+    fun remover(permissaoId: Long)
 }

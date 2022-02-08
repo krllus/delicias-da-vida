@@ -6,5 +6,5 @@ interface FormaPagamentoRepository {
     fun listar(): List<FormaPagamento>
     fun buscar(id: Long): FormaPagamento?
     fun salvar(formaPagamento: FormaPagamento): FormaPagamento
-    fun remover(formaPagamento: FormaPagamento)
+    fun remover(formaPagamentoId: Long)
 }

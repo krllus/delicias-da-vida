@@ -31,7 +31,6 @@ class CozinhaRepositoryImpl(
     @Transactional
     override fun remover(cozinhaId: Long) {
         val cozinha = buscar(cozinhaId) ?: throw EmptyResultDataAccessException(1)
-
         return manager.remove(cozinha)
     }
 

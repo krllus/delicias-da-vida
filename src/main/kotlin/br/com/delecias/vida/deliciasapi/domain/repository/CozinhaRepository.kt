@@ -6,5 +6,5 @@ interface CozinhaRepository {
     fun listar(): List<Cozinha>
     fun buscar(id: Long): Cozinha?
     fun salvar(cozinha: Cozinha): Cozinha
-    fun remover(cozinha: Long)
+    fun remover(cozinhaId: Long)
 }
