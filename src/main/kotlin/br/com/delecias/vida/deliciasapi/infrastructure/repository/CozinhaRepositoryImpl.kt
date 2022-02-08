@@ -2,6 +2,7 @@ package br.com.delecias.vida.deliciasapi.infrastructure.repository
 
 import br.com.delecias.vida.deliciasapi.domain.model.Cozinha
 import br.com.delecias.vida.deliciasapi.domain.repository.CozinhaRepository
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
@@ -28,7 +29,11 @@ class CozinhaRepositoryImpl(
     }
 
     @Transactional
-    override fun remover(cozinha: Cozinha) {
+    override fun remover(cozinhaId: Long) {
+        val cozinha = buscar(cozinhaId) ?: throw EmptyResultDataAccessException(1)
+
         return manager.remove(cozinha)
     }
+
+
 }

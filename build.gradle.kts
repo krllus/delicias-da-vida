@@ -31,6 +31,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-devtools")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.5")
 
     // DATABASE
     runtimeOnly("mysql:mysql-connector-java")
