@@ -4,11 +4,12 @@ import br.com.delecias.vida.deliciasapi.domain.model.Cozinha
 import br.com.delecias.vida.deliciasapi.domain.repository.CozinhaRepository
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
-@Component
+@Repository
 class CozinhaRepositoryImpl(
     @PersistenceContext val manager: EntityManager
 ) : CozinhaRepository {
@@ -17,6 +18,12 @@ class CozinhaRepositoryImpl(
         val query = manager.createQuery("from Cozinha", Cozinha::class.java)
 
         return query.resultList
+    }
+
+    override fun listarCozinhasPorNome(nome: String): List<Cozinha> {
+        return manager.createQuery("from Cozinha where nome like :nome", Cozinha::class.java)
+            .setParameter("nome", "%$nome%")
+            .resultList
     }
 
     override fun buscar(id: Long): Cozinha? {
