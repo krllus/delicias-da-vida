@@ -17,6 +17,6 @@ class TestController(
 ) {
     @GetMapping(value = ["cozinhas/por-nome"])
     fun getCozinhas(@RequestParam("nome") nome: String): ResponseEntity<List<Cozinha>> {
-        return ResponseEntity.ok(cozinhaRepository.listarCozinhasPorNome(nome))
+        return ResponseEntity.ok(cozinhaRepository.findByNome(nome))
     }
 }

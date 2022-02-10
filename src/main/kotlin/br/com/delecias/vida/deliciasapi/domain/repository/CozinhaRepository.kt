@@ -1,11 +1,10 @@
 package br.com.delecias.vida.deliciasapi.domain.repository
 
 import br.com.delecias.vida.deliciasapi.domain.model.Cozinha
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
-interface CozinhaRepository {
-    fun listar(): List<Cozinha>
-    fun listarCozinhasPorNome(nome :String): List<Cozinha>
-    fun buscar(id: Long): Cozinha?
-    fun salvar(cozinha: Cozinha): Cozinha
-    fun remover(cozinhaId: Long)
+@Repository
+interface CozinhaRepository : JpaRepository<Cozinha, Long>{
+    fun findByNome(nome :String): List<Cozinha>
 }

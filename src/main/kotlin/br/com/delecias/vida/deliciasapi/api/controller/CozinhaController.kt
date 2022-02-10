@@ -23,28 +23,34 @@ class CozinhaController(
 
     @GetMapping
     fun getCozinhas(): ResponseEntity<List<Cozinha>> {
-        return ResponseEntity.ok(cozinhaRepository.listar())
+        return ResponseEntity.ok(cozinhaRepository.findAll())
     }
 
     @GetMapping(produces = [MediaType.APPLICATION_XML_VALUE])
     fun getCozinhasXml(): ResponseEntity<CozinhasXmlWrapper> {
-        return ResponseEntity.ok(CozinhasXmlWrapper(cozinhaRepository.listar()))
+        return ResponseEntity.ok(CozinhasXmlWrapper(cozinhaRepository.findAll()))
     }
 
     @GetMapping(value = ["/{cozinhaId}"])
     fun getCozinhaPorId(@PathVariable("cozinhaId") cozinhaId: Long): ResponseEntity<Cozinha> {
 
-        val cozinha = cozinhaRepository.buscar(cozinhaId) ?: return ResponseEntity.notFound().build()
+        val cozinha = cozinhaRepository.findById(cozinhaId)
 
-        return ResponseEntity.ok(cozinha)
+        if(!cozinha.isPresent)
+            return ResponseEntity.notFound().build()
+
+        return ResponseEntity.ok(cozinha.get())
     }
 
     @GetMapping(value = ["/{cozinhaId}"], produces = [MediaType.APPLICATION_XML_VALUE])
     fun getCozinhaPorIdXml(@PathVariable("cozinhaId") cozinhaId: Long): ResponseEntity<Cozinha> {
 
-        val cozinha = cozinhaRepository.buscar(cozinhaId) ?: return ResponseEntity.notFound().build()
+        val cozinha = cozinhaRepository.findById(cozinhaId)
 
-        return ResponseEntity.ok(cozinha)
+        if(!cozinha.isPresent)
+            return ResponseEntity.notFound().build()
+
+        return ResponseEntity.ok(cozinha.get())
     }
 
     @PostMapping
@@ -61,7 +67,12 @@ class CozinhaController(
         @RequestBody cozinha: Cozinha
     ): ResponseEntity<Cozinha> {
 
-        val cozinhaAtual = cozinhaRepository.buscar(cozinhaId) ?: return ResponseEntity.notFound().build()
+        val optionalCozinha = cozinhaRepository.findById(cozinhaId)
+
+        if(!optionalCozinha.isPresent)
+            return ResponseEntity.notFound().build()
+
+        val cozinhaAtual = optionalCozinha.get()
 
         BeanUtils.copyProperties(cozinha, cozinhaAtual, "id")
 

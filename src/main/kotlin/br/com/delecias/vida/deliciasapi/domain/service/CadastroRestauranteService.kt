@@ -12,13 +12,14 @@ import org.springframework.stereotype.Service
 @Service
 class CadastroRestauranteService(
     val repoRestaurante: RestauranteRepository,
-    val repoCozinha : CozinhaRepository
+    val repoCozinha: CozinhaRepository
 ) {
 
     fun salvar(restaurante: Restaurante): Restaurante {
 
         val cozinhaId = restaurante.cozinha.id
-        val cozinha = repoCozinha.buscar(cozinhaId) ?: throw EntidadeNaoEncontradaException("Nao existe cozinha para id: $cozinhaId")
+        val cozinha = repoCozinha.findById(cozinhaId)
+            .orElseThrow { throw EntidadeNaoEncontradaException("Nao existe cozinha para id: $cozinhaId") }
 
         restaurante.cozinha = cozinha
 
