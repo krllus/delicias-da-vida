@@ -34,23 +34,23 @@ class CozinhaController(
     @GetMapping(value = ["/{cozinhaId}"])
     fun getCozinhaPorId(@PathVariable("cozinhaId") cozinhaId: Long): ResponseEntity<Cozinha> {
 
-        val cozinha = cozinhaRepository.findById(cozinhaId)
+        val optionalCozinha = cozinhaRepository.findById(cozinhaId)
 
-        if(!cozinha.isPresent)
+        if(!optionalCozinha.isPresent)
             return ResponseEntity.notFound().build()
 
-        return ResponseEntity.ok(cozinha.get())
+        return ResponseEntity.ok(optionalCozinha.get())
     }
 
     @GetMapping(value = ["/{cozinhaId}"], produces = [MediaType.APPLICATION_XML_VALUE])
     fun getCozinhaPorIdXml(@PathVariable("cozinhaId") cozinhaId: Long): ResponseEntity<Cozinha> {
 
-        val cozinha = cozinhaRepository.findById(cozinhaId)
+        val optionalCozinha = cozinhaRepository.findById(cozinhaId)
 
-        if(!cozinha.isPresent)
+        if(!optionalCozinha.isPresent)
             return ResponseEntity.notFound().build()
 
-        return ResponseEntity.ok(cozinha.get())
+        return ResponseEntity.ok(optionalCozinha.get())
     }
 
     @PostMapping

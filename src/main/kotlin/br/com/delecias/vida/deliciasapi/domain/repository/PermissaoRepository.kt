@@ -1,10 +1,8 @@
 package br.com.delecias.vida.deliciasapi.domain.repository
 
 import br.com.delecias.vida.deliciasapi.domain.model.Permissao
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
-interface PermissaoRepository {
-    fun listar(): List<Permissao>
-    fun buscar(id: Long): Permissao?
-    fun salvar(permissao: Permissao): Permissao
-    fun remover(permissaoId: Long)
-}
+@Repository
+interface PermissaoRepository : JpaRepository<Permissao, Long>

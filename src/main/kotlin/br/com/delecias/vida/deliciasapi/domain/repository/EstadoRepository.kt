@@ -1,10 +1,9 @@
 package br.com.delecias.vida.deliciasapi.domain.repository
 
+import br.com.delecias.vida.deliciasapi.domain.model.Cidade
 import br.com.delecias.vida.deliciasapi.domain.model.Estado
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
-interface EstadoRepository {
-    fun listar(): List<Estado>
-    fun buscar(id: Long): Estado?
-    fun salvar(estado: Estado): Estado
-    fun remover(estadoId: Long)
-}
+@Repository
+interface EstadoRepository : JpaRepository<Estado, Long>

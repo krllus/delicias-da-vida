@@ -21,23 +21,29 @@ class CidadeController(
 
     @GetMapping
     fun getCidades(): ResponseEntity<List<Cidade>> {
-        return ResponseEntity.ok(repoCidade.listar())
+        return ResponseEntity.ok(repoCidade.findAll())
     }
 
     @GetMapping(value = ["/{cidadeId}"])
     fun getCidadePorId(@PathVariable("cidadeId") cidadeId: Long): ResponseEntity<Cidade> {
 
-        val cidade = repoCidade.buscar(cidadeId) ?: return ResponseEntity.notFound().build()
+        val optionalCidade = repoCidade.findById(cidadeId)
 
-        return ResponseEntity.ok(cidade)
+        if(!optionalCidade.isPresent)
+            return ResponseEntity.notFound().build()
+
+        return ResponseEntity.ok(optionalCidade.get())
     }
 
     @GetMapping(value = ["/{cidadeId}"], produces = [MediaType.APPLICATION_XML_VALUE])
     fun getCidadePorIdXml(@PathVariable("cidadeId") cidadeId: Long): ResponseEntity<Cidade> {
 
-        val cidade = repoCidade.buscar(cidadeId) ?: return ResponseEntity.notFound().build()
+        val optionalCidade = repoCidade.findById(cidadeId)
 
-        return ResponseEntity.ok(cidade)
+        if(!optionalCidade.isPresent)
+            return ResponseEntity.notFound().build()
+
+        return ResponseEntity.ok(optionalCidade.get())
     }
 
     @PostMapping
@@ -54,7 +60,12 @@ class CidadeController(
         @RequestBody cidade: Cidade
     ): ResponseEntity<Cidade> {
 
-        val cidadeAtual = repoCidade.buscar(cidadeId) ?: return ResponseEntity.notFound().build()
+        val optionalCidade = repoCidade.findById(cidadeId)
+
+        if(!optionalCidade.isPresent)
+            return ResponseEntity.notFound().build()
+
+        val cidadeAtual = optionalCidade.get()
 
         BeanUtils.copyProperties(cidade, cidadeAtual, "id")
 

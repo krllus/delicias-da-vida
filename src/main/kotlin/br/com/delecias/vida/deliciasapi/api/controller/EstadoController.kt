@@ -22,23 +22,29 @@ class EstadoController(
 
     @GetMapping
     fun getEstados(): ResponseEntity<List<Estado>> {
-        return ResponseEntity.ok(repoEstado.listar())
+        return ResponseEntity.ok(repoEstado.findAll())
     }
 
     @GetMapping(value = ["/{estadoId}"])
     fun getCidadePorId(@PathVariable("estadoId") estadoId: Long): ResponseEntity<Estado> {
 
-        val estado = repoEstado.buscar(estadoId) ?: return ResponseEntity.notFound().build()
+        val optionalEstado = repoEstado.findById(estadoId)
 
-        return ResponseEntity.ok(estado)
+        if(!optionalEstado.isPresent)
+            return ResponseEntity.notFound().build()
+
+        return ResponseEntity.ok(optionalEstado.get())
     }
 
     @GetMapping(value = ["/{estadoId}"], produces = [MediaType.APPLICATION_XML_VALUE])
     fun getCidadePorIdXml(@PathVariable("estadoId") estadoId: Long): ResponseEntity<Estado> {
 
-        val estado = repoEstado.buscar(estadoId) ?: return ResponseEntity.notFound().build()
+        val optionalEstado = repoEstado.findById(estadoId)
 
-        return ResponseEntity.ok(estado)
+        if(!optionalEstado.isPresent)
+            return ResponseEntity.notFound().build()
+
+        return ResponseEntity.ok(optionalEstado.get())
     }
 
     @PostMapping
@@ -55,7 +61,12 @@ class EstadoController(
         @RequestBody estado: Estado
     ): ResponseEntity<Estado> {
 
-        val estadoAtual = repoEstado.buscar(estadoId) ?: return ResponseEntity.notFound().build()
+        val optionalEstado = repoEstado.findById(estadoId)
+
+        if(!optionalEstado.isPresent)
+            return ResponseEntity.notFound().build()
+
+        val estadoAtual = optionalEstado.get()
 
         BeanUtils.copyProperties(estado, estadoAtual, "id")
 
