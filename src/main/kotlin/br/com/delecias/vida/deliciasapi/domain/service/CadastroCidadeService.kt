@@ -20,16 +20,18 @@ class CadastroCidadeService(
         val estadoId = cidade.estado.id
 
         val estado =
-            repoEstado.buscar(estadoId) ?: throw EntidadeNaoEncontradaException("Nao existe estado para id: $estadoId")
+            repoEstado.findById(estadoId).orElseThrow{
+                throw EntidadeNaoEncontradaException("Nao existe estado para id: $estadoId")
+            }
 
         cidade.estado = estado
 
-        return repoCidade.salvar(cidade)
+        return repoCidade.save(cidade)
     }
 
     fun excluir(cidadeId: Long) {
         try {
-            repoCidade.remover(cidadeId)
+            repoCidade.deleteById(cidadeId)
         } catch (e: EmptyResultDataAccessException) {
             throw EntidadeNaoEncontradaException("Nao existe um cadastro de cidade com codigo: $cidadeId")
         } catch (e: DataIntegrityViolationException) {

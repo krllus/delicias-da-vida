@@ -16,12 +16,12 @@ class CadastroEstadoService(
 ) {
 
     fun salvar(estado: Estado): Estado {
-        return repoEstado.salvar(estado)
+        return repoEstado.save(estado)
     }
 
     fun excluir(estadoId: Long) {
         try {
-            repoEstado.remover(estadoId)
+            repoEstado.deleteById(estadoId)
         } catch (e: EmptyResultDataAccessException) {
             throw EntidadeNaoEncontradaException("Nao existe um cadastro de estado com codigo: $estadoId")
         } catch (e: DataIntegrityViolationException) {

@@ -1,17 +1,31 @@
 package br.com.delecias.vida.deliciasapi.domain.model
 
+import java.math.BigDecimal
 import javax.persistence.*
 
 
 @Entity
-@Table(name = "tb_estado")
-data class Estado(
+@Table(name = "tb_produto")
+data class Produto(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = -1L,
+    var id: Long = -1L,
 
     @Column(nullable = false)
-    val nome: String = ""
+    var nome: String = "",
+
+    @Column(nullable = false)
+    var descricao: String = "",
+
+    @Column(nullable = false)
+    var preco: BigDecimal = BigDecimal.ZERO,
+
+    @Column(nullable = false)
+    var ativo: Boolean = true,
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    var restaurante: Restaurante = Restaurante()
 ) {
 
 
@@ -19,7 +33,7 @@ data class Estado(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Estado
+        other as Produto
 
         if (id != other.id) return false
 
@@ -29,4 +43,6 @@ data class Estado(
     override fun hashCode(): Int {
         return id.hashCode()
     }
+
+
 }

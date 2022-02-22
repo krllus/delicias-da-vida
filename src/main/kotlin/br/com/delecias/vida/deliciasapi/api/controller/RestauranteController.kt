@@ -58,7 +58,8 @@ class RestauranteController(
 
         val restauranteAtual = restauranteOptional.get()
 
-        BeanUtils.copyProperties(restaurante, restauranteAtual, "id")
+        BeanUtils.copyProperties(restaurante, restauranteAtual,
+            "id", "formasPagamento", "endereco", "dataCadastro", "produtos")
 
         return try {
             val restauranteAtualizado = serviceRestaurante.salvar(restauranteAtual)

@@ -23,12 +23,12 @@ class CadastroRestauranteService(
 
         restaurante.cozinha = cozinha
 
-        return repoRestaurante.salvar(restaurante)
+        return repoRestaurante.save(restaurante)
     }
 
     fun excluir(restauranteId: Long) {
         try {
-            repoRestaurante.remover(restauranteId)
+            repoRestaurante.deleteById(restauranteId)
         } catch (e: EmptyResultDataAccessException) {
             throw EntidadeNaoEncontradaException("Nao existe um cadastro de cozinnha com codigo: $restauranteId")
         } catch (e: DataIntegrityViolationException) {
