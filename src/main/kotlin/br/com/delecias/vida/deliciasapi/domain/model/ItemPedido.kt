@@ -1,37 +1,35 @@
 package br.com.delecias.vida.deliciasapi.domain.model
 
-import org.hibernate.annotations.CreationTimestamp
-import java.time.LocalDateTime
+import java.math.BigDecimal
 import javax.persistence.*
 
 @Entity
-@Table(name = "tb_usuario")
-data class Usuario(
+@Table(name = "tb_pedido_item")
+data class ItemPedido(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = -1L,
 
-    @Column(nullable = false)
-    var nome: String = "",
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "produto_id", nullable = false)
+    var produto: Produto = Produto(),
 
     @Column(nullable = false)
-    var email: String = "",
+    var quantidade: Int = 0,
 
     @Column(nullable = false)
-    var senha: String = "",
+    var precoUnitario : BigDecimal = BigDecimal.ZERO,
 
     @Column(nullable = false)
-    @CreationTimestamp
-    var dataCadastro: LocalDateTime = LocalDateTime.now(),
+    var precoTotal : BigDecimal = BigDecimal.ZERO,
 
-    @ManyToMany
-    @JoinTable(
-        name = "usuario_grupo",
-        joinColumns = [JoinColumn(name = "usuario_id")],
-        inverseJoinColumns = [JoinColumn(name = "grupo_id")]
-    )
-    var grupos: List<Grupo> = ArrayList(),
-) {
+    @Column
+    var observacao : String = "",
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedido_id", nullable = false)
+    var pedido: Pedido = Pedido(),
+){
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

@@ -14,7 +14,12 @@ data class Permissao(
     var nome: String = "",
 
     @Column(nullable = false)
-    var descricao: String = ""
+    var descricao: String = "",
+
+    @ManyToOne
+    @JoinColumn(name = "grupo_id", nullable = false)
+    var grupo: Grupo = Grupo(),
+
 ) {
 
 

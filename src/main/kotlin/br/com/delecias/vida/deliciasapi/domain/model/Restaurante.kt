@@ -22,8 +22,6 @@ data class Restaurante(
     @Column(name = "taxa_frete", nullable = false)
     var taxaFrete: BigDecimal = BigDecimal.ZERO,
 
-    //@JsonIgnore
-    //@JsonIgnoreProperties
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cozinha_id", nullable = false)
     var cozinha: Cozinha = Cozinha(),
@@ -42,7 +40,6 @@ data class Restaurante(
     @Column(nullable = false, columnDefinition = "datetime")
     var dataAtualizacao: LocalDateTime = LocalDateTime.now(),
 
-    //@JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "restaurante_forma_pagamento",
