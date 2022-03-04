@@ -1,6 +1,7 @@
 package br.com.delecias.vida.deliciasapi.domain.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.math.BigDecimal
@@ -21,7 +22,9 @@ data class Restaurante(
     @Column(name = "taxa_frete", nullable = false)
     var taxaFrete: BigDecimal = BigDecimal.ZERO,
 
-    @ManyToOne
+    //@JsonIgnore
+    //@JsonIgnoreProperties
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cozinha_id", nullable = false)
     var cozinha: Cozinha = Cozinha(),
 
