@@ -33,10 +33,14 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
 
-    implementation("org.springdoc:springdoc-openapi-ui:1.6.5")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.6")
 
     // DATABASE
     runtimeOnly("mysql:mysql-connector-java")
+
+    // DATABASE - FLYWAY
+    implementation("org.flywaydb:flyway-core:8.5.1")
+    implementation("org.flywaydb:flyway-mysql:8.5.1")
 
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
