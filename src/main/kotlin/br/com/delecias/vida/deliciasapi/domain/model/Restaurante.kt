@@ -42,8 +42,8 @@ data class Restaurante(
     @Column(nullable = false, columnDefinition = "datetime")
     var dataAtualizacao: LocalDateTime = LocalDateTime.now(),
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
+    //@JsonIgnore
+    @ManyToMany
     @JoinTable(
         name = "restaurante_forma_pagamento",
         joinColumns = [JoinColumn(name = "restaurante_id")],
