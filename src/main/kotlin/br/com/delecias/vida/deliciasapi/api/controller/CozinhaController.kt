@@ -1,8 +1,6 @@
 package br.com.delecias.vida.deliciasapi.api.controller
 
 import br.com.delecias.vida.deliciasapi.api.model.CozinhasXmlWrapper
-import br.com.delecias.vida.deliciasapi.domain.exception.EntidadeEmUsoException
-import br.com.delecias.vida.deliciasapi.domain.exception.EntidadeNaoEncontradaException
 import br.com.delecias.vida.deliciasapi.domain.model.Cozinha
 import br.com.delecias.vida.deliciasapi.domain.repository.CozinhaRepository
 import br.com.delecias.vida.deliciasapi.domain.service.CadastroCozinhaService
@@ -36,7 +34,7 @@ class CozinhaController(
 
         val optionalCozinha = cozinhaRepository.findById(cozinhaId)
 
-        if(!optionalCozinha.isPresent)
+        if (!optionalCozinha.isPresent)
             return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok(optionalCozinha.get())
@@ -47,7 +45,7 @@ class CozinhaController(
 
         val optionalCozinha = cozinhaRepository.findById(cozinhaId)
 
-        if(!optionalCozinha.isPresent)
+        if (!optionalCozinha.isPresent)
             return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok(optionalCozinha.get())
@@ -69,7 +67,7 @@ class CozinhaController(
 
         val optionalCozinha = cozinhaRepository.findById(cozinhaId)
 
-        if(!optionalCozinha.isPresent)
+        if (!optionalCozinha.isPresent)
             return ResponseEntity.notFound().build()
 
         val cozinhaAtual = optionalCozinha.get()
@@ -84,15 +82,8 @@ class CozinhaController(
     @DeleteMapping(value = ["/{cozinhaId}"])
     fun deleteCozinha(
         @PathVariable("cozinhaId") cozinhaId: Long
-    ): ResponseEntity<Cozinha> {
-        return try {
-            cadastroCozinhaService.excluir(cozinhaId)
-            ResponseEntity.noContent().build()
-        } catch (e: EntidadeNaoEncontradaException) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-        } catch (e: EntidadeEmUsoException) {
-            ResponseEntity.status(HttpStatus.CONFLICT).build()
-        }
+    ) {
+        cadastroCozinhaService.excluir(cozinhaId)
     }
 
 }
